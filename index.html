@@ -1,11 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MoodBook</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="script.js"></script>
+  <!-- defer tells the browser to download the script file while parsing HTML, but execute it after HTML is loaded fully -->
 </head>
-<body>
-    
+
+<body class="font-comic flex flex-col items-center bg-pink-50 min-h-screen">
+
+  <!-- Header -->
+  <header class="text-2xl font-bold m-6">MoodBook</header>
+
+  <!-- Mood Check -->
+  <div class="flex flex-col items-center gap-4 w-full max-w-xl">
+
+    <!-- Cat + Question -->
+    <div class="flex items-center gap-4 w-full">
+      <div id="cat" class="h-40 w-52 rounded-lg bg-top bg-cover" style="background-image:url('images/cat.jpg')"></div>
+      <div class="text-lg p-2 border-2 bg-white rounded-xl border-white">How are you feeling today Chad?</div>
+    </div>
+
+    <!-- Mood Buttons -->
+    <div class="flex flex-wrap items-center gap-5 justify-center w-full mt-5">
+      <button  id="happy" class="mood-btn w-28 h-28 rounded-sm shadow-lg bg-cover transition-transform hover:scale-105" style="background-image:url('images/happy.png')"></button>
+      <button id="sad" class="mood-btn w-28 h-28 rounded-sm shadow-lg bg-cover transition-transform hover:scale-105" style="background-image:url('images/sad.png')"></button>
+      <button id="angry" class="mood-btn w-28 h-28 rounded-sm shadow-lg bg-cover transition-transform hover:scale-105" style="background-image:url('images/angry.jpg')"></button>
+      <button id="normal" class="mood-btn w-28 h-28 rounded-sm shadow-lg bg-gray-200 transition-transform hover:scale-105"></button>
+ 
+    </div>
+
+    <!-- Quote Box -->
+    <div class="h-28 w-full max-w-[470px] border border-purple-200 rounded-xl bg-purple-200 mt-4 p-2">
+      <div class="quote-box h-20 border border-white text-xl rounded-xl bg-white flex items-center justify-center p-2 text-center">
+        We're ready to react to your feelings!
+      </div>
+    </div>
+
+  </div>
+
 </body>
 </html>

@@ -31,10 +31,10 @@ const moodResponses = {
 localStorage.setItem("moodResponses", JSON.stringify(moodResponses));
 
 const themecolors = {
-  happy: "bg-gradient-to-r from-yellow-100 via-pink-100 to-purple-100",
-  sad: "bg-gradient-to-r from-blue-200 to-gray-300",
-  angry: "bg-gradient-to-r from-red-400 to-orange-500",
-  normal: "bg-gradient-to-r from-green-100 to-blue-100"
+  happy: "bg-gradient-to-r from-yellow-400 via-pink-400 to-purple-400",
+  sad: "bg-gradient-to-r from-blue-400 to-indigo-500",
+  angry: "bg-gradient-to-r from-red-500 to-orange-500",
+  normal: "bg-gradient-to-r from-green-400 to-blue-400"
 }
 
 
@@ -95,6 +95,12 @@ LoadMood();
 
 function LoadNotes(){
      
+}
+
+function clearMood(){
+    localStorage.removeItem("currMood");
+    localStorage.removeItem("currQuote");
+    location.reload();
 }
 
 

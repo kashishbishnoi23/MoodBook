@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diary</title>
+    <title>Notes</title>
     <script defer src="diary.js"></script>
     <style>
         :root {
@@ -24,7 +24,7 @@
         }
 
         .container {
-            max-width: 960px;
+            max-width: 760px;
             margin: 0 auto;
             padding: 16px;
         }
@@ -78,39 +78,42 @@
             margin: 16px 0;
         }
 
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 16px;
-        }
-
-        .card {
+        form {
             background: var(--card);
             border: 1px solid var(--border);
             border-radius: 12px;
             padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
 
-        .note-title {
-            font-weight: 600;
-            margin: 6px 0;
-        }
-
-        .note-meta {
+        label {
             color: var(--muted);
-            font-size: 12px;
-        }
-
-        .note-content {
-            color: #374151;
             font-size: 14px;
-            margin-top: 6px;
         }
 
-        .note-actions {
+        input[type="text"],
+        textarea {
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 10px 12px;
+            font-size: 14px;
+            color: var(--text);
+            background: #fff;
+        }
+
+        textarea {
+            min-height: 220px;
+            resize: vertical;
+        }
+
+        .actions {
             display: flex;
             gap: 8px;
-            margin-top: 10px;
+            justify-content: flex-end;
         }
 
         .btn {
@@ -118,10 +121,15 @@
             border: 1px solid var(--border);
             background: var(--card);
             color: var(--text);
-            padding: 6px 10px;
-            border-radius: 8px;
+            padding: 10px 14px;
+            border-radius: 10px;
             cursor: pointer;
-            font-size: 14px;
+        }
+
+        .btn.primary {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: #fff;
         }
 
         .btn:hover,
@@ -130,6 +138,12 @@
             border-color: #d1d5db;
             outline: none;
         }
+
+        .btn.primary:hover,
+        .btn.primary:focus {
+            filter: brightness(0.95);
+        }
+        
     </style>
 </head>
 
@@ -137,17 +151,26 @@
     <header class="nav">
         <div class="container nav-inner">
             <div class="brand"><span class="brand-icon">📖</span><span>MoodBook</span></div>
-            <nav class="nav-links"><a href="index.html">Home</a><a href="notes.html">Notes</a></nav>
+            <nav class="nav-links"><a href="index.html">Home</a><a href="diary.html">Diary</a></nav>
         </div>
     </header>
 
     <main class="container">
-        <h1>Your Diary</h1>
-        <div id="noteList" class="grid">
-            
-        </div>
+        <h1>New Note</h1>
+        <form id="noteForm">
+            <div>
+                <label for="noteTitle">Title</label>
+                <input id="noteTitle" type="text" placeholder="Feeling excited today!" />
+            </div>
+            <div>
+                <label for="noteContent">Content</label>
+                <textarea id="noteContent" placeholder="Start writing your thoughts..."></textarea>
+            </div>
+            <div class="actions">
+                <button type="submit" class="btn primary">Save Note</button>
+            </div>
+        </form>
     </main>
-    
 </body>
 
 </html>

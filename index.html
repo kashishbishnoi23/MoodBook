@@ -4,42 +4,268 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MoodBook</title>
-  <script src="https://cdn.tailwindcss.com"></script>
   <script defer src="script.js"></script>
-  <!-- defer tells the browser to download the script file while parsing HTML, but execute it after HTML is loaded fully -->
-</head>
+  <!-- <script defer src="diary.js"></script> -->
+  <style>
+    :root {
+      --bg: #f7f7fb;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --card: #ffffff;
+      --border: #e5e7eb;
+      --primary: #4f46e5;
+    }
 
-<body class="font-comic flex flex-col items-center bg-pink-50 min-h-screen">
+    /* Themes */
+    .theme-happy { --bg: #fffdf5; --primary: #f59e0b; }
+    .theme-sad { --bg: #f5f7ff; --primary: #3b82f6; }
+    .theme-angry { --bg: #fff5f5; --primary: #ef4444; }
+    .theme-normal { --bg: #f6fffb; --primary: #10b981; }
 
-  <!-- Header -->
-  <header class="text-2xl font-bold m-6">MoodBook</header>
+    html, body {
+      height: 100%;
+    }
 
-  <!-- Mood Check -->
-  <div class="flex flex-col items-center gap-4 w-full max-w-xl">
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
 
-    <!-- Cat + Question -->
-    <div class="flex items-center gap-4 w-full">
-      <div id="cat" class="h-40 w-52 rounded-lg bg-top bg-cover" style="background-image:url('images/cat.jpg')"></div>
-      <div class="text-lg p-2 border-2 bg-white rounded-xl border-white">How are you feeling today Chad?</div>
-    </div>
+    .container {
+      width: 100%;
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 16px;
+      box-sizing: border-box;
+    }
 
-    <!-- Mood Buttons -->
-    <div class="flex flex-wrap items-center gap-5 justify-center w-full mt-5">
-      <button  id="happy" class="mood-btn w-28 h-28 rounded-sm shadow-lg bg-cover transition-transform hover:scale-105" style="background-image:url('images/happy.png')"></button>
-      <button id="sad" class="mood-btn w-28 h-28 rounded-sm shadow-lg bg-cover transition-transform hover:scale-105" style="background-image:url('images/sad.png')"></button>
-      <button id="angry" class="mood-btn w-28 h-28 rounded-sm shadow-lg bg-cover transition-transform hover:scale-105" style="background-image:url('images/angry.jpg')"></button>
-      <button id="normal" class="mood-btn w-28 h-28 rounded-sm shadow-lg bg-gray-200 transition-transform hover:scale-105"></button>
- 
-    </div>
+    /* Nav */
+    .nav {
+      border-bottom: 1px solid var(--border);
+      background: var(--card);
+    }
 
-    <!-- Quote Box -->
-    <div class="h-28 w-full max-w-[470px] border border-purple-200 rounded-xl bg-purple-200 mt-4 p-2">
-      <div class="quote-box h-20 border border-white text-xl rounded-xl bg-white flex items-center justify-center p-2 text-center">
-        We're ready to react to your feelings!
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+    }
+    .brand-icon {
+      width: 32px;
+      height: 32px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #fff;
+      font-size: 18px;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text);
+      padding: 8px 12px;
+      border-radius: 8px;
+    }
+    .nav-links a:hover,
+    .nav-links a:focus {
+      background: #f3f4f6;
+      outline: none;
+    }
+
+    /* Hero */
+    .hero {
+      text-align: center;
+      padding: 40px 0 20px;
+    }
+    .hero h1 {
+      margin: 0 0 8px;
+      font-size: 28px;
+      font-weight: 700;
+    }
+    .hero p {
+      margin: 0 auto;
+      max-width: 640px;
+      color: var(--muted);
+    }
+
+    /* Card */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 16px 0;
+    }
+
+    /* Mood area */
+    .mood-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+    #cat {
+      width: 84px;
+      height: 84px;
+      border-radius: 50%;
+      background-image: url('images/cat.jpg');
+      background-size: cover;
+      background-position: center;
+      border: 1px solid var(--border);
+    }
+    .prompt {
+      color: var(--muted);
+    }
+
+    .mood-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+    @media (max-width: 640px) {
+      .mood-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    .mood-btn {
+      width: 72px;
+      height: 72px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: #fafafa;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      cursor: pointer;
+      transition: transform 0.1s ease, background-color 0.2s ease, border-color 0.2s ease;
+    }
+    .mood-btn:hover,
+    .mood-btn:focus {
+      transform: translateY(-2px);
+      background: #f5f5f5;
+      outline: none;
+      border-color: #d1d5db;
+    }
+
+    .quote-box {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: var(--text);
+      padding: 12px 16px;
+      border-radius: 10px;
+      background: #fafafa;
+      border: 1px solid var(--border);
+    }
+
+    /* Actions */
+    .actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 10px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .btn:hover,
+    .btn:focus {
+      border-color: #d1d5db;
+      outline: none;
+      background: #f9fafb;
+    }
+    .btn.primary {
+      border-color: var(--primary);
+      background: var(--primary);
+      color: #fff;
+    }
+    .btn.primary:hover,
+    .btn.primary:focus {
+      filter: brightness(0.95);
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      padding: 24px 0 40px;
+    }
+  </style>
+  </head>
+
+<body>
+  <header class="nav">
+    <div class="container nav-inner">
+      <div class="brand">
+        <span class="brand-icon">📖</span>
+        <span>MoodBook</span>
       </div>
+      <nav class="nav-links">
+        <a href="diary.html">Diary</a>
+        <a href="notes.html">Notes</a>
+      </nav>
     </div>
+  </header>
 
-  </div>
+  <main class="container">
+    <section class="hero">
+      <h1>Track your mood, simply</h1>
+      <p>Record how you feel each day and build a mindful habit with a clean, distraction‑free diary.</p>
+    </section>
+
+    <section class="card">
+      <div class="mood-row">
+        <div id="cat"></div>
+        <div class="prompt">How are you feeling today?</div>
+      </div>
+
+      <div class="mood-grid">
+        <button id="happy" class="mood-btn" aria-label="Happy">😊</button>
+        <button id="sad" class="mood-btn" aria-label="Sad">😢</button>
+        <button id="angry" class="mood-btn" aria-label="Angry">😠</button>
+        <button id="normal" class="mood-btn" aria-label="Neutral">😐</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="quote-box">We're ready to react to your feelings!</div>
+    </section>
+
+    <section class="card">
+      <div class="actions">
+        <a href="diary.html" class="btn primary">Open Diary</a>
+        <a href="notes.html" class="btn">View Notes</a>
+        <button class="btn" onclick="clearMood()">Reset Mood</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Made with care for your well‑being
+  </footer>
 
 </body>
 </html>

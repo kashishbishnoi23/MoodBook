@@ -93,9 +93,7 @@ function LoadMood(){
 }
 LoadMood();
 
-function LoadNotes(){
-     
-}
+
 
 function clearMood(){
     localStorage.removeItem("currMood");

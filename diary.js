@@ -29,6 +29,9 @@ class Note{
     }
 }
 
+
+
+
 class Diary{
     constructor(){
         this.notes = [];
@@ -83,94 +86,5 @@ class Diary{
 
 }
 
-const diary = new Diary(); // initialise notes array and loads data from local storage and store in notes[]
-const form = document.getElementById("noteForm");
-const titleInput = document.getElementById("noteTitle");
-const noteContent = document.getElementById("noteContent");
-const noteList = document.getElementById("noteList");
-
-let title;
-let content;
-
-titleInput.addEventListener("input", ()=>{
-    title = titleInput.value;
-})
-
-noteContent.addEventListener("input", ()=>{
-    content = noteContent.value;
-})
-
-form.addEventListener('submit', (e)=>{
-    e.preventDefault();
-    diary.addNote(title, content);
-    renderNotes();
-})
 
 
-function renderNotes(){
-    const notesContainer = document.querySelector("#noteList");
-    console.log(notesContainer);
-    if (notesContainer == null){
-        return;
-    }
-    notesContainer.innerHTML = "";
-
-    if (diary.notes != null) {
-        diary.notes.forEach((note) => {
-            notesContainer.innerHTML += `
-<div class="card">
-  <div class="note-meta">${new Date(note.date).toLocaleDateString()}</div>
-  <div class="note-title">${note.title}</div>
-  <div class="note-content">${note.content}</div>
-  <div class="note-meta">Created: ${new Date(note.createdAt).toLocaleString()} · Updated: ${new Date(note.updatedAt).toLocaleString()}</div>
-  <div class="note-actions">
-    <button class="btn" data-id="${note.id}" data-action="edit">Edit</button>
-    <button class="btn" data-id="${note.id}" data-action="delete">Delete</button>
-  </div>
-</div>`;
-        })
-
-
-}
-
-}
-
-
-
-function LoadNotes(){
-
-
-    // let notes = [
-    //      { date: "14/04", title: "Feeling anxious", content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem quibusdam nihil alias suscipit, quo libero beatae, perferendis aliquam, accusantium qui harum nisi deleniti. Nam cupiditate reiciendis odio maxime, temporibus, autem vel quis, provident ab nisi labore consectetur. Ducimus atque" },
-
-    //      { date: "15/04", title: "Happy day", content: "Had a great walk...Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem quibusdam nihil alias suscipit, quo libero beatae, perferendis aliquam, accusantium qui harum nisi deleniti. Nam cupiditate reiciendis odio maxime, temporibus, autem vel quis, provident ab nisi labore consectetur. Ducimus atque" }
-    // ]
-
-    // localStorage.setItem("diaryNotes", JSON.stringify(notes));
-    // let notes = JSON.parse(localStorage.getItem("diaryNotes"));
-
-    // '{"date":"14/04","title":"Feeling anxious","content":"Lorem ipsum..."}' -> stored in form of String => has to be converted back to JSON object
-
-    diary.loadfromlocalStorage();
-    renderNotes();
-
-}
-
-LoadNotes();
-
-
-
-// // Handle add note form if present (on notes.html)
-// if (typeof form !== 'undefined' && form) {
-//     form.addEventListener('submit', (e) => {
-//         e.preventDefault();
-//         const title = titleInput ? titleInput.value.trim() : '';
-//         const content = noteContent ? noteContent.value.trim() : '';
-//         if (!title && !content) return;
-//         diary.addNote(title || 'Untitled', content || '');
-//         if (titleInput) titleInput.value = '';
-//         if (noteContent) noteContent.value = '';
-//         // Optional: navigate to diary list
-//         try { window.location.href = 'diary.html'; } catch (_) {}
-//     });
-// }
